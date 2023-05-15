@@ -1,6 +1,6 @@
 # LAB - Class 06
 
-Project: Ten Thousand dice game
+## Project: Ten Thousand dice game
 
 Authors: 
 ```
