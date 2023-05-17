@@ -91,6 +91,7 @@ class GameLogic:
       tuple_value = tuple(int(digit) for digit in string)
       return tuple_value
 
+
     @classmethod
     def startGame(cls):
      userInputs = ''
