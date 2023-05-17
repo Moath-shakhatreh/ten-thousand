@@ -94,121 +94,69 @@ class GameLogic:
 
     @classmethod
     def startGame(cls):
-     userInputs = ''
-     print("Welcome to Ten Thousand\n(y)es to play or (n)o to decline you can't enter other thing")
-     userInputs = input(' >')
-     while userInputs != 'q':
-    #    print("Welcome to Ten Thousand\n(y)es to play or (n)o to decline you can't enter other thing")
-    #    userInputs=input("> ")
-       roun=0
-       if userInputs.strip()=="y":                  
-        roun+=1
-        dice=cls.roll_dice()
-        dices="*** "
-        for i in dice:
-          dices+=str(i)+" "
-        else:
-          dices+="***"
-        print(f"Starting round {roun}\nRolling 6 dice...\n{dices}\nEnter dice to keep, or (q)uit:")
-        userInputs=input("> ")
-        total=0
+         
+        print("Welcome to Ten Thousand\n(y)es to play or (n)o to decline you can't enter other thing")
+        userInputs = input(' >')
 
-        while userInputs.strip()!="q":
-          iinput=cls.string_to_tuple(userInputs.strip())   
-          score1=cls.calculate_score(iinput)
-          print(f"You have {score1} unbanked points and {6-len(iinput)} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
-          userInputs = input(' >')
-          remaining = 6-len(iinput)
-          
+        while userInputs != 'q':
 
-          if userInputs == 'b' :
-             total = total + score1 
-             print(f"You banked {score1} points in round {roun}\nTotal score is {total} points\nStarting round {roun+1}\nRolling 6 dice...\n{dices}\nEnter dice to keep, or (q)uit:")
-             break  
-
-          while userInputs != 'b' and userInputs != 'q':
-            if remaining == 0 :
-                  break
-            else:
-              dice=cls.roll_dice(remaining)
-              dices="*** "
-              for i in dice:
-               dices+=str(i)+" "
-              print(f"You have {score1} unbanked points and {6-len(iinput)} dice remaining \n{dices}\nEnter dice to keep, or roll again or (q)uit:")
-              userInputs = input(' >')             
-              iinput=cls.string_to_tuple(userInputs.strip())   
-              score1=score1 + cls.calculate_score(iinput)
+            if userInputs == 'y':
+                roun = 0
+                total = 0
+                
             
-              remaining = remaining - len(iinput)
-
-              print(f"You have {score1} unbanked points and {remaining} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
-
-              userInputs = input('> ')
-
-      
-     print (f"Thanks for playing. You earned {score1} points")
-     return 
-        
-       
-      
-
-              
-
-
-          
-        # if userInputs.strip()=="r":  
-        #     dice=cls.roll_dice(remaining_dices)
-        #     dices="*** "
-        #     for i in dice:
-        #       dices+=str(i)+" "
-        #     else:
-        #       dices+="***"
-        #       score1=cls.calculate_score(dice)
-        #     print(f"Starting round {roun}\nRolling 6 dice...\n{dices}\nEnter dice to keep, or (q)uit:")
-        #     userInputs=input("> ")
-        #   if not userInputs.strip().isdigit():
-        #     print(f"You can't enter any thing untile the dices")
-        #     userInputs=input("> ")
-        #   else:
+            roun += 1
+            dice=cls.roll_dice()
+            dices="*** "
+            for i in dice:
+                dices+=str(i)+" "
+            dices = dices + '***'
+                
             
+            print(f"Starting round {roun}\nRolling 6 dice...\n{dices}\nEnter dice to keep, or (q)uit:")
 
-            # if score2<=score1:
-            #   print(f"You have {score1} unbanked points and {6-len(iinput)} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
-            #   userInputs=input("> ")
-            #   if userInputs.strip()=="b":
-            #     total+=score1
-            #     dice=cls.roll_dice()
-            #     dices="*** "
-            #     for i in dice:
-            #       dices+=str(i)+" "
-            #     else:
-            #       dices+="***"
-            #     print(f"You banked {score1} points in round {roun}\nTotal score is {total} points\nStarting round {roun+1}\nRolling 6 dice...\n{dices}\nEnter dice to keep, or (q)uit:")
-            #     roun+=1
-            #     userInputs=input("> ")
-        
-    # 
+            userInputs=input("> ")
+            
+            if userInputs != 'q' :
+                iinput=cls.string_to_tuple(userInputs.strip())   
+                score1= cls.calculate_score(iinput)
+                print(f"You have {score1} unbanked points and {6-len(iinput)} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
+                userInputs = input(' >')
+                remaining = 6-len(iinput)
+          
+            if userInputs == 'b' :
+                total = total + score1 
+                print(f"You banked {score1} points in round {roun}\nTotal score is {total} points\n")
 
-    
+            while userInputs == 'r':
+                if remaining == 0 :
+                    break
+                
+                dice=cls.roll_dice(remaining)
+                dices="*** "
+                for i in dice:
+                    dices+=str(i)+" "
+                dices = dices + '***'
 
-    # def play_dice(self,rolls = roll_dice()):
-    
-    #       while True:
-    #           print("Enter r to roll or q to quit")
-    #           choice = input("> ")
+                print(f"You have {score1} unbanked points and {remaining} dice remaining \n{dices}\nEnter dice to keep, or roll again or (q)uit:")
+                userInputs = input(' >') 
+                if userInputs != 'r' and userInputs != 'q' and userInputs != 'f':        
+                    iinput=cls.string_to_tuple(userInputs.strip())   
+                    score1=score1 + cls.calculate_score(iinput)  
+                    total = total + score1
+                    remaining = remaining - len(iinput)
+                    print(f"You have {score1} unbanked points and {remaining} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
+                    userInputs = input('> ')
+
+                if userInputs == 'b' :
+                    print(f"You banked {score1} points in round {roun}\nTotal score is {total} points\n")
+                
+
+            
       
-    #           if choice == "q":
-    #               print("OK, bye")
-    #               break
-    #           else:
-    #               roll = rolls(6)
-    #               roll_str = ""
-    #               for num in roll:
-    #                   roll_str += str(num) + " "
-    #               print(f"*** {roll_str}***")
+        print (f"Thanks for playing. You earned {total} points")
+        return  
 
-
-    
         
     def mock_roller(self):
             rolls = [(3,2,5,4,3,3),(5,2,3,2,1,4)]
@@ -228,65 +176,3 @@ if __name__ == '__main__':
     # rolls = [(5,6),(6,1),(1,1),(1,2)]
     # play_dice(mock_roller)
 
-      
-    
-
-    # @staticmethod
-    # def calculate_score(dice):
-    #     score = 0
-    #     counter = Counter(dice)
-
-    #     # Check for four of a kind
-    #     for num, count in counter.items():
-    #         if count >= 4:
-    #             score += num * 200
-    #             counter.subtract({num: 4})
-
-
-    #     # Check for combinations
-    #     if counter[1] >= 3:
-    #         score += 1000
-    #         counter.subtract({1: 3})
-
-    #     for num in range(2, 7):
-    #         if counter[num] >= 3:
-    #             score += num * 100
-    #             counter.subtract({num: 3})
-
-    #     score += counter[1] * 100
-    #     score += counter[5] * 50
-
-    #     # Check for straight
-    #     if len(counter) == 6:
-    #         if set(counter.keys()) == {1, 2, 3, 4, 5, 6}:
-    #             score = 1500
-
-    #     return score
-    
-if __name__ == '__main__':
-    pass
-    # print(GameLogic.calculate_score())
-
-
-
-    # def calculate_score(dice):
-    #     score = 0
-    #     counter = Counter(dice)
-
-    #     # Check for combinations
-    #     if counter[1] >= 3:
-    #         score += 1000
-    #         counter.subtract({1: 3})
-
-    #     for num in range(2, 7):
-    #         if counter[num] >= 3:
-    #             score += num * 100
-    #             counter.subtract({num: 3})
-
-    #     score += counter[1] * 100
-    #     score += counter[5] * 50
-
-    #     return score
-
-    
-        
