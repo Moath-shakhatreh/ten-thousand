@@ -99,14 +99,8 @@ class GameLogic:
       tuple_value = tuple(int(digit) for digit in string)
       return tuple_value
 
-
     @classmethod
     def startGame(cls):
-        '''
-        This finction is used to run the game bsed 
-        on its algorithim and on some methods in the
-        clase(GameLogic) 
-        '''
         print("Welcome to Ten Thousand\n(y)es to play or (n)o to decline you can't enter other thing")
         userInputs = input('> ')
         while userInputs != 'q':
@@ -118,11 +112,8 @@ class GameLogic:
 
                 while True:
                     score1 = 0
-                    if userInputs == 'r':
-                        print(f"Result of \nRolling {remaining} dice...")
-                    else:
-                        print(f"Starting round {roun}\nRolling {remaining} dice...")
-                    dice = cls.roll_dice(remaining)            #  result of throwing the dices
+                    print(f"Starting round {roun}\nRolling {remaining} dice...")
+                    dice = cls.roll_dice(remaining)
                     dices = "*** "
                     for i in dice:
                         dices += str(i) + " "
@@ -140,7 +131,7 @@ class GameLogic:
                             print('You have no points to bank \nEnter dice to Play or (q)uit')
                             print()
 
-                    while userInputs.strip().lower() == 'r':     #ch
+                    if userInputs.strip().lower() == 'r':
                         if remaining == 6:
                             dice = cls.roll_dice()
                         elif remaining == 0:
@@ -154,15 +145,14 @@ class GameLogic:
                         dices += "***"
 
                         print(f"{dices}\nEnter dice to keep, or (q)uit:")
-                        userInputs = input('> ')        #ch
                     
-                    if userInputs.isdigit():          # steps after the user choose the dices to calculate its result
+                    if userInputs.isdigit():
                         input_1 = cls.string_to_tuple(userInputs.strip())
                         if all(d in dice for d in input_1):  # to cheack if the user selects from the existing dices for a specific round in the game "All elements in list_1 are present in list_2."
                             score1 = cls.calculate_score(input_1)
                             remaining -= len(input_1)
                             score2+=score1
-                                                                   # 1111
+                            total += score1
                             print(f"You have {score2} unbanked points and {remaining} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
                             userInputs = input('> ')
 
@@ -171,7 +161,6 @@ class GameLogic:
                                 break
 
                             if userInputs.strip().lower() == 'b':
-                                total += score2                     # 1111
                                 print(f"You banked {score2} points in round {roun}")
                                 print(f"Total score is {total} points")
                                 score2 = 0
@@ -195,12 +184,10 @@ class GameLogic:
 
 
 
+
+      
+          
     def mock_roller(self):
-        '''
-        we use this function to test these two result
-        in first two rolling after that the rsult of 
-        rolling the dices will be random
-        '''
         rolls = [(3,2,5,4,3,3),(5,2,3,2,1,4)]
         return rolls.pop(0) if rolls else GameLogic.roll_dice(6)
 
