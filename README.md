@@ -6,8 +6,6 @@ Authors:
 ```
 Mo'ath shakhatreh
         
-Aseel 
-
 Qais aldwary
 ```
 
