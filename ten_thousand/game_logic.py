@@ -100,98 +100,146 @@ class GameLogic:
       return tuple_value
 
 
+
     @classmethod
     def startGame(cls):
-        '''
-        This finction is used to run the game bsed 
-        on its algorithim and on some methods in the
-        clase(GameLogic) 
-        '''
-        print("Welcome to Ten Thousand\n(y)es to play or (n)o to decline you can't enter other thing")
+        """
+        Starts the Ten Thousand game.
+        The method prompts the user to play the game or decline. If the user chooses to play,
+        it initializes the game variables and starts the game loop. The loop allows the player
+        to roll dice, keep dice, bank points, and continue playing until they decide to quit.
+        Returns:
+            None
+        Raises:
+            None
+        """
+        print("Welcome to Ten Thousand\n(y)es to play or (n)o to decline")
         userInputs = input('> ')
+        
         while userInputs != 'q':
             if userInputs.strip().lower() == 'y':
                 roun = 1
                 total = 0
                 remaining = 6
                 score2 = 0
-
                 while True:
                     score1 = 0
-                    if userInputs == 'r':
-                        print(f"Result of \nRolling {remaining} dice...")
-                    else:
-                        print(f"Starting round {roun}\nRolling {remaining} dice...")
-                    dice = cls.roll_dice(remaining)            #  result of throwing the dices
-                    dices = "*** "
-                    for i in dice:
-                        dices += str(i) + " "
-                    dices += "***"
-                    print(f"{dices}\nEnter dice to keep, or (q)uit:")
+
+                    
+                    
+                    if remaining == 6 and userInputs.isdigit() == False and userInputs != 'r':
+                        # if userInputs == 'b':
+                        print(f"Starting round {roun}\nRolling 6 dice...")
+                        dice = cls.roll_dice()
+                        dices = "*** "
+                        for i in dice:
+                            dices += str(i) + " "
+                        dices += "***"
+                        print(f"{dices}\nEnter dice to keep, or (q)uit:")
+                    
+                        
                     userInputs = input('> ')
 
                     if userInputs.strip().lower() == 'q':
                         print(f"Thanks for playing. You earned {total} points")
                         break
-
-                    if userInputs == 'b':              # in case if the user inter b in the first(when he don't have any points to bank)
-                        if score1 == 0:
-                            print()
-                            print('You have no points to bank \nEnter dice to Play or (q)uit')
-                            print()
-
-                    while userInputs.strip().lower() == 'r':     #ch
-                        if remaining == 6:
-                            dice = cls.roll_dice()
-                        elif remaining == 0:
-                            break
-                        else:
-                            dice = cls.roll_dice(remaining)
-
+                    if userInputs.strip().lower() == 'b' and score2 == 0:
+                        print('\nYou have no points to bank \nEnter dice to Play or (q)uit\n')
+                        continue
+                    if userInputs.strip().lower() == "r" and score2 == 0:
+                        print("\nYou have to select a dice to re-roll first or (q)uit\n")
+                        continue
+                    if userInputs.strip().lower() == "r" :
+                        print(f"Rolling {remaining} dice...")
+                        dice = cls.roll_dice(remaining)
                         dices = "*** "
                         for i in dice:
                             dices += str(i) + " "
                         dices += "***"
+                        if cls.Zelch(dice)==True:
+                            score2 = 0
+                            print(f"You banked {score2} points in round {roun}\nTotal score is {total} points")
 
-                        print(f"{dices}\nEnter dice to keep, or (q)uit:")
-                        userInputs = input('> ')        #ch
-                    
-                    if userInputs.isdigit():          # steps after the user choose the dices to calculate its result
-                        input_1 = cls.string_to_tuple(userInputs.strip())
-                        if all(d in dice for d in input_1):  # to cheack if the user selects from the existing dices for a specific round in the game "All elements in list_1 are present in list_2."
-                            score1 = cls.calculate_score(input_1)
-                            remaining -= len(input_1)
-                            score2+=score1
-                                                                   # 1111
-                            print(f"You have {score2} unbanked points and {remaining} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
-                            userInputs = input('> ')
+                            roun += 1
+                            remaining = 6
 
-                            if userInputs.strip().lower() == 'q':
-                                print(f"Thanks for playing. You earned {total} points")
-                                break
+                            print(f"Starting round {roun}\nRolling 6 dice...")
+                            dice = cls.roll_dice()
+                            dices = "*** "
+                            for i in dice:
+                               dices += str(i) + " "
+                            dices += "***"
+                            print(f"{dices}\nEnter dice to keep, or (q)uit:")
 
-                            if userInputs.strip().lower() == 'b':
-                                total += score2                     # 1111
-                                print(f"You banked {score2} points in round {roun}")
-                                print(f"Total score is {total} points")
-                                score2 = 0
-                                roun += 1
-                                remaining = 6    
-                                continue
                         else:
-                            print()
-                            print("Invalid dice selection. Try again.")
-                            print()
-                            continue
-                    else:
-                        print("Invalid input. Try again.")
+                            print(f"{dices}\nEnter dice to keep, or (q)uit:")
                         continue
 
+                    if userInputs.strip().lower() == 'b':
+                        total += score2
+                        print(f"You banked {score2} points in round {roun}\nTotal score is {total} points")
+                        score2 = 0
+                        roun += 1
+                        remaining = 6
+                        continue
+                    if userInputs.isdigit():
+                        input_1 = cls.string_to_tuple(userInputs.strip())
+                        if cls.validate_keepers(dice,input_1) is True:
+                            pass
+                        else:
+                            while cls.validate_keepers(dice,input_1) is False:
+                                print("\nCheater!!! Or possibly made a typo...\n")
+                                print(f"{dices}\nEnter dice to keep, or (q)uit:")
+                                userInputs = input(' >')
+                                input_1 = cls.string_to_tuple(userInputs.strip())
+                        score1 = cls.calculate_score(input_1)
+                        remaining -= len(input_1)
+                        score2 += score1
+                        if remaining != 0 :
+                            print(f"You have {score2} unbanked points and {remaining} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
+                        else:
+                            remaining = 6
+                            print(f"You have {score2} unbanked points and {remaining} dice remaining\n(r)oll again, (b)ank your points or (q)uit:")
+                    else:
+                        print("\nInvalid input. Try again.\n")
             else:
                 print("OK. Maybe another time")
                 break
 
-    
+
+    @classmethod
+    def validate_keepers(cls,dice,userInput):
+        '''
+        check if the user is cheating or not by
+        comparing between the user input and 
+        the dices
+        '''
+        for x in userInput :
+            if userInput.count(x) > dice.count(x):
+                return False
+            else:
+                return True
+            
+
+    @classmethod
+    def Zelch(cls,dice):
+        '''
+        check the dices if they are winning dices
+        '''
+        if cls.calculate_score(dice) == 0 :
+            dices = "*** "
+            for i in dice:
+                dices += str(i) + " "
+            dices += "***"
+            print(f"{dices}")
+            print('''
+****************************************
+**        Zilch!!! Round over         **
+****************************************
+            ''')
+            return True
+
+
 
 
 
@@ -203,6 +251,9 @@ class GameLogic:
         '''
         rolls = [(3,2,5,4,3,3),(5,2,3,2,1,4)]
         return rolls.pop(0) if rolls else GameLogic.roll_dice(6)
+
+
+
 
 
 if __name__ == '__main__':
