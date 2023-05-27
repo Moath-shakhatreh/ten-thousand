@@ -1,4 +1,4 @@
-# LAB - Class 06 and 07
+# LAB - Class 06 and 07 and 08
 
 ## Project: Ten Thousand dice game
 
@@ -27,4 +27,6 @@ python3 ten_thoousend/game_logic.py
 
 ### How do you run tests?
 
-pytest
+pytest test/version_1/test_calculate_score.py
+pytest test/version_1/test_roll_dice.py
+pytest test/version_3/test_validate_keepers.py
