@@ -1,4 +1,4 @@
-# LAB - Class 06 and 07 and 08
+# LAB - Class 06 and 07 and 08 and 09
 
 ## Project: Ten Thousand dice game
 

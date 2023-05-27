@@ -75,8 +75,8 @@ class Game(GameLogic):
                 print("OK. Maybe another time")
                 break
 
+# def play(roller,num_rounds):
+#     Game.play(num_rounds)
 
-# def Play(roller=Game.roll_dice, num_rounds=1):
-#     Game.play(roller,num_rounds)
 
 
