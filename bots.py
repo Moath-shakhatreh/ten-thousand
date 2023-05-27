@@ -136,7 +136,7 @@ class NervousNellie(BaseBot):
         return "b"
 
 
-class YourBot(BaseBot):
+class Moath_and_Qais(BaseBot):
     def _roll_bank_or_quit(self):
         """your logic here"""
         if self.dice_remaining > 3 :
@@ -154,4 +154,4 @@ class YourBot(BaseBot):
 if __name__ == "__main__":
     num_games = 100
     NervousNellie.play(num_games)
-    YourBot.play(num_games)
+    Moath_and_Qais.play(num_games)
